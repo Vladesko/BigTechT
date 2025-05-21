@@ -1,0 +1,4 @@
+# bin хранятся артефакты dotnet build и dotnet publish
+bin/
+# здесь хранятся кэши nuget пакетов
+obj/
