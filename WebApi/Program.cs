@@ -1,6 +1,7 @@
 using Serilog;
 using Logging;
 using WebApi.Common;
+using WebApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapPrometheusScrapingEndpoint();
+
+app.ApplyMigrations();
 
 app.UseHttpsRedirection();
 

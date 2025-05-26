@@ -11,12 +11,13 @@ namespace Persistance
     {
         public static IServiceCollection AddPersistance(this IServiceCollection services, IConfiguration configuration)
         {
-            string connectionString = configuration.GetConnectionString("Database") ??
+            string connectionString = configuration.GetConnectionString("PostgreSQL") ??
                                   throw new ArgumentNullException(nameof(configuration));
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString));
-            services.AddRepositories();
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+            services.AddRepositories();
+           
             return services;
         }
         private static IServiceCollection AddRepositories(this IServiceCollection services)

@@ -1,13 +1,13 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 5000 
 
-
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["/WebApi/WebApi.csproj", "/src/WebApi/"]
 COPY ["/Application/Application.csproj", "/src/Application/"]
 COPY ["/Domain/Domain.csproj", "/src/Domain/"]
-COPY ["/Persistence/Persistence.csproj", "/src/Persistence/"]
+COPY ["/Persistance/Persistance.csproj", "/src/Persistance/"]
 COPY ["/HttpModels/HttpModels.csproj", "/src/HttpModels/"]
 COPY ["/Logging/Logging.csproj", "/src/Logging/"]
 COPY ["/TelemetryAndTracing/TelemetryAndTracing.csproj", "/src/TelemetryAndTracing/"]

@@ -7,15 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstrations\Behaviors\" />
-    <Folder Include="Products\Commands\UpdateProduct\" />
-    <Folder Include="Products\Commands\DeleteProduct\" />
-    <Folder Include="Products\Queries\GetProductById\" />
-    <Folder Include="Products\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>

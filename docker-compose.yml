@@ -11,7 +11,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
-      - "ConnectionStrings__PostgreSQL=Server=postgresdb;Port=5432;Database=Product;User Id=postgres;Password=postgres"
+      - "ConnectionStrings__PostgreSQL=Server=postgresdb;Port=5432;Database=Product;User Id=postgres;Password=postgres;"
       - "OTLP_ENDPOINT_URL=http://jaeger:4317/"
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
     depends_on:
@@ -28,15 +28,11 @@ services:
     networks:
       - app
     environment:
-      # xpack платные расширения elastic, отрубаем их
       - xpack.watcher.enabled=false
-      # параметры JVM кучи(Xms - наименьший, Xmx - наибольший размер доступный)
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      # однодоменная конфигурация т.е одна нода, легче для тестов
       - discovery.type=single-node
       - xpack.security.enabled=false
     ports:
-      # внешний порт 9200 и внутренний оставляем такой
       - "9200:9200"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
@@ -50,12 +46,10 @@ services:
       - app
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
-      # xpack платное расширение отключаем
       - xpack.security.enabled=false
     depends_on:
       - elasticsearch
     ports:
-    # внешний порт 9200 и внутренний оставляем такой
       - "5601:5601"
 
   jaeger:
@@ -70,7 +64,6 @@ services:
       - "6831:6831/udp"
       - "6832:6832/udp"
       - "5778:5778"
-      # порт веб интерфейса
       - "16686:16686"
       - "14268:14268"
       - "9411:9411"

@@ -4,20 +4,18 @@ using Domain.Product;
 
 namespace Application.Products.Commands.CreateProduct
 {
-    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, int>
+    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, string>
     {
-        private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _repository;
-        public CreateProductCommandHandler(IUnitOfWork unitOfWork, IProductRepository repository)
+        public CreateProductCommandHandler(IProductRepository repository)
         {
             _repository = repository;
-            _unitOfWork = unitOfWork;
         }
-        public async Task<Result<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
-        {
-            await _repository.Create(Product.CreateOrder(request.Id, request.Name, request.Price));
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return request.Id;
+        //TODO: Change string to int
+        public async Task<Result<string>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        {         
+            await _repository.Create(Product.CreateOrder(request.Name, request.Price), cancellationToken);
+            return request.Name;
         }
     }
 }
