@@ -8,10 +8,10 @@ namespace Persistance.Repositories
     internal class ProductRepository(ApplicationDbContext context) : IProductRepository
     {
         private readonly ApplicationDbContext _context = context;
-        public async Task<string> Create(Product product, CancellationToken cancellationToken)
+        public async Task<int> Create(Product product, CancellationToken cancellationToken)
         {
             await _context.AddAsync(product);
-            return product.Name;
+            return product.Id;
         }
 
         public async Task<bool> Delete(int id, CancellationToken cancellationToken)
@@ -28,11 +28,10 @@ namespace Persistance.Repositories
                     throw new ProductNotFound($"Product with Id: {id} was not found");              
                 return product;       
         }
-
-        public async Task<Product> UpdateAllProduct(Product product, CancellationToken cancellationToken)
+                  //???async without await???
+        public async Task UpdateAllProduct(Product product, CancellationToken cancellationToken)
         {
             var updatedProduct = _context.Products.Update(product).Entity;
-            return updatedProduct;
         }
     }
 }

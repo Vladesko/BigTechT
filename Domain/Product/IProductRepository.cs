@@ -3,8 +3,9 @@
     public interface IProductRepository
     {
         Task<Product> GetByIdAsync(int id, CancellationToken cancellationToken);
-        Task<string> Create(Product product, CancellationToken cancellationToken);
+        Task<int> Create(Product product, CancellationToken cancellationToken);
         Task<bool> Delete(int id, CancellationToken cancellationToken);
-        Task<Product> UpdateAllProduct(Product product, CancellationToken cancellationToken);
+        //TODO: Change this method, return result and maybe change parametrs for methods
+        Task UpdateAllProduct(Product product, CancellationToken cancellationToken); 
     }
 }

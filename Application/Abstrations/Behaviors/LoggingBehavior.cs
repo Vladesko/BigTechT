@@ -16,25 +16,25 @@ namespace Application.Abstrations.Behaviors
         }
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            string name = request.GetType().Name;
+            string requestName = request.GetType().Name;
             try
             {
-                _logger.LogInformation($"Execuring request: \"{name}\"");
+                _logger.LogInformation($"Execuring request: \"{requestName}\"");
                 var result = await next(cancellationToken);
                 if (result.IsSuccess)
                 {
-                    _logger.LogInformation($"Request: \"{name}\" processed successfully");
+                    _logger.LogInformation($"Request: \"{requestName}\" processed successfully");
                 }
                 else
                 {
                     using (LogContext.PushProperty("Error", result.Error, true))
-                        _logger.LogError($"Request: \"{name}\" processed with error");                   
+                        _logger.LogError($"Request: \"{requestName}\" processed with error");                   
                 }
                 return result;
             }
             catch (Exception)
             {
-                _logger.LogError($"Request processing failed \"{name}\"");
+                _logger.LogError($"Request processing failed \"{requestName}\"");
                 throw;
             }
         }

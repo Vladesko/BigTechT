@@ -13,6 +13,7 @@ namespace Application
                 configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
                 configuration.AddOpenBehavior(typeof(UnitOfWorkBehavior<,>));
                 configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
+                configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
 
             return services;

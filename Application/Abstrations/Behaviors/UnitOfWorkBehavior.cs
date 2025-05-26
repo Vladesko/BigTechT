@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Abstrations.Behaviors
 {
-    public sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TResponse>
+    internal sealed class UnitOfWorkBehavior<TRequest, TResponse>(IUnitOfWork unitOfWork) : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IBaseCommand
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
