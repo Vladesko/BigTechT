@@ -11,10 +11,15 @@ namespace Application.Products.Commands.DeleteProduct
         {
             _productRepository = productRepository;
         }
+
         public async Task<Result<bool>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
             var isRemoved = await _productRepository.Delete(request.Id, cancellationToken);
-            return isRemoved;
+            if(!isRemoved)
+            {   //TODO: This is not currect realisation
+                return Result.Failure<bool>(Error.RemoveFailed);
+            }
+            return Result.Success(isRemoved);
         }
     }
 }
