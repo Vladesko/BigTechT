@@ -25,6 +25,8 @@ if (app.Environment.IsDevelopment())
 
 app.MapPrometheusScrapingEndpoint();
 
+app.UseCustomExceptions();
+
 app.ApplyMigrations();
 
 app.UseHttpsRedirection();

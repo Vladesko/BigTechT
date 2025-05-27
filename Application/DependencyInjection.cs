@@ -1,5 +1,6 @@
 ﻿using Application.Abstrations.Behaviors;
 using Domain.Abstractions;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application
@@ -15,6 +16,8 @@ namespace Application
                 configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
                 configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
+
+            services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
             return services;
         }

@@ -1,4 +1,5 @@
 ﻿using Application.Abstrations.Messaging;
+using Domain.Abstractions;
 
 namespace Application.Products.Commands.CreateProduct
 {
