@@ -16,18 +16,18 @@ namespace Application.Abstrations.Behaviors
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if(!_validators.Any())
-                return await next();
+                return await next(cancellationToken);
             
             var context = new ValidationContext<TRequest>(request);
             var validationErrors = _validators.
                 Select(validator => validator.Validate(context)).
-                Where(vr => vr.Errors.Any()).
-                SelectMany(vf => vf.Errors).
+                Where(vr => vr.Errors.Any()).  //vr it`s ValidationResult
+                SelectMany(vf => vf.Errors).   //vf it`s ValidationFailure
                 Select(vf => new ValidationError(vf.PropertyName, vf.ErrorMessage)).
                 ToList();
 
-            if (validationErrors.Any()) //rename Validation
-                throw new Exceptions.ValidationException(validationErrors);
+            if (validationErrors.Any())
+                throw new ProductValidationException(validationErrors);
 
             return await next();
         }

@@ -4,6 +4,6 @@ using MediatR;
 
 namespace Application.Products.Commands.UpdateProduct
 {
-    public sealed record UpdateProductCommand(Product Product) : ICommand<Unit>;
+    public sealed record UpdateProductCommand(int Id, string Name, decimal Price) : ICommand;
 
 }

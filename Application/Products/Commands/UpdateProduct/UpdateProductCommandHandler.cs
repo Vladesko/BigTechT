@@ -5,16 +5,19 @@ using MediatR;
 
 namespace Application.Products.Commands.UpdateProduct
 {
-    internal class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand, Unit>
+    internal class UpdateProductCommandHandler : ICommandHandler<UpdateProductCommand>
     {
         private readonly IProductRepository _productRepository;
         public UpdateProductCommandHandler(IProductRepository productRepository)
         {
             _productRepository = productRepository;
         }
-        public Task<Result<Unit>> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+
+        public async Task<Result> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+           await _productRepository.UpdateAllProductAsync(request, cancellationToken);
+            
+            return Result.Success(request.Id);
         }
     }
 }

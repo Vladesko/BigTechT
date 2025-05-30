@@ -15,9 +15,7 @@ namespace Application.Products.Commands.CreateProduct
         public async Task<Result<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var productId = await _productRepository.
-                Create(Product.CreateOrder(request.Name, request.Price), cancellationToken);
-            if(productId == 0)
-                return Result.Failure<int>(Error.NullValue);
+                CreateAsync(Product.CreateOrder(request.Name, request.Price), cancellationToken);
 
             return Result.Success(productId);
         }

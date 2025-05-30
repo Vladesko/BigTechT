@@ -5,6 +5,10 @@ namespace WebApi.Extensions
 {
     internal static class MigrationExtensions
     {
+        /// <summary>
+        /// Automatic application of new migrations to the Database
+        /// </summary>
+        /// <param name="app"></param>
         internal static void ApplyMigrations(this IApplicationBuilder app) 
         {
             using IServiceScope scope = app.ApplicationServices.CreateScope();

@@ -13,11 +13,11 @@
         public static Product CreateOrder(string name, decimal price)
         {
             if(string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             if (price <= 0) 
-                throw new DivideByZeroException("price");
+                throw new DivideByZeroException(nameof(price));
 
-            return new Product(name, price);
+            return new Product(name, ProductService.CalculateWithTaxes(price));
         }
     }
 }

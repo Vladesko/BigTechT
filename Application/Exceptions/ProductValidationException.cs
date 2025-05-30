@@ -1,8 +1,8 @@
 ﻿namespace Application.Exceptions
 {
-    public class ValidationException : Exception
+    public class ProductValidationException : Exception
     {
-        public ValidationException(IEnumerable<ValidationError> errors)
+        public ProductValidationException(IEnumerable<ValidationError> errors)
         {
             ValidationErrors = errors;
         }

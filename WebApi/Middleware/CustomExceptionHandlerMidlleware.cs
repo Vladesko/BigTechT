@@ -1,7 +1,7 @@
 ﻿using Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApi.Middleware.GlobalExceptions
+namespace WebApi.Middleware
 {
     public class CustomExceptionHandlerMidlleware
     {
@@ -53,18 +53,25 @@ namespace WebApi.Middleware.GlobalExceptions
             {
                 return exception switch
                 {
-                    ValidationException validationException => new ExceptionDetails(
+                    ProductValidationException validationException => new ExceptionDetails(
                         StatusCodes.Status400BadRequest,
                         "ValidationFailure",
                         "Validation error",
                         "One or more validation errors has occurred",
                         validationException.ValidationErrors),
+                    ProductNotFoundException productNotFound => new ExceptionDetails(
+                        StatusCodes.Status404NotFound,
+                        "Product.Not.Found",
+                        "Product was not found",
+                        productNotFound.Message,
+                        null
+                        ),
                     _ => new ExceptionDetails(
                         StatusCodes.Status500InternalServerError,
                         "ServerError",
                         "Server error",
                         "An unexpected error has occurred",
-                        null)
+                        null),
                 };
             }
 

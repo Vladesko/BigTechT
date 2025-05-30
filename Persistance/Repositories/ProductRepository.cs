@@ -1,23 +1,23 @@
 ﻿using Application.Exceptions;
+using Application.Products.Commands.UpdateProduct;
 using Domain.Product;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistance.Repositories
 {
-    //Make result pattern
     internal class ProductRepository(ApplicationDbContext context) : IProductRepository
     {
         private readonly ApplicationDbContext _context = context;
-        public async Task<int> Create(Product product, CancellationToken cancellationToken)
+        public async Task<int> CreateAsync(Product product, CancellationToken cancellationToken)
         {
             await _context.AddAsync(product);
             return product.Id;
         }
 
-        public async Task<bool> Delete(int id, CancellationToken cancellationToken)
+        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken)
         {
             var entity = await _context.Products.FirstOrDefaultAsync(p => p.Id == id) ??
-                    throw new ProductNotFound($"Product with Id: {id} was not found"); 
+                    throw new ProductNotFoundException($"Product with Id: {id} was not found"); 
                  _context.Products.Remove(entity);
                 return true;               
         }
@@ -25,13 +25,16 @@ namespace Persistance.Repositories
         public async Task<Product> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id) ??
-                    throw new ProductNotFound($"Product with Id: {id} was not found");              
+                    throw new ProductNotFoundException($"Product with Id: {id} was not found");              
                 return product;       
         }
-                  //???async without await???
-        public async Task UpdateAllProduct(Product product, CancellationToken cancellationToken)
+        public async Task UpdateAllProductAsync(UpdateProductCommand command, CancellationToken cancellationToken)
         {
-            var updatedProduct = _context.Products.Update(product).Entity;
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == command.Id) ??
+                    throw new ProductNotFoundException($"Product with Id: {command.Id} was not found");
+
+            product.Price = command.Price;
+            product.Name = command.Name;
         }
     }
 }
