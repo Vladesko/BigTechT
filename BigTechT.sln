@@ -6,12 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infastructure", "Infastructure", "{0F12AC52-8110-4F62-A7EC-5DCB1A8D405D}"
-	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
-		docker-compose.yml = docker-compose.yml
-		Dockerfile = Dockerfile
-		prometheus.yml = prometheus.yml
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{21C27F96-42E5-44A6-9341-1B25FFA50FB4}"
 EndProject
@@ -32,6 +26,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryAndTracing", "TelemetryAndTracing\TelemetryAndTracing.csproj", "{F0B0C4A0-DBF9-4ED2-8113-9784D7B69371}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "Caching\Caching.csproj", "{3DE6A118-6D00-4268-A7D4-87CC4AEB98B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1470E4CE-34EA-4A29-BE9C-4519A46934B1}"
+ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+		prometheus.yml = prometheus.yml
+		EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

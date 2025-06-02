@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HttpModels\HttpModels.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\Persistance\Persistance.csproj" />
     <ProjectReference Include="..\TelemetryAndTracing\TelemetryAndTracing.csproj" />

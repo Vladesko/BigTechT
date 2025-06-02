@@ -14,7 +14,7 @@ namespace TelemetryAndTracing
             var tracingOtlpEndpoint = configuration["Otlp_Endpoint_Url"];
             var otel = services.AddOpenTelemetry();
             otel.ConfigureResource(resource => resource
-                .AddService(serviceName: "Something"));
+                .AddService(serviceName: "BigTechT"));
 
             otel.WithMetrics(metrics => metrics
                 // Metrics provider from OpenTelemetry
