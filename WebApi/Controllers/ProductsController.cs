@@ -1,4 +1,5 @@
 ﻿using Application.Products.Commands.DeleteProduct;
+using Application.Products.Queries.GetAll;
 using Application.Products.Queries.GetProductById;
 using HttpModels.Products.Command.Create;
 using HttpModels.Products.Command.Update;
@@ -23,9 +24,8 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Create(CreateProductRequest request, CancellationToken cancellationToken)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
+            
             var result = await _sender.Send(_mapper.Map(request), cancellationToken);
             return Ok(result.Value);
         }
@@ -36,9 +36,19 @@ namespace WebApi.Controllers
             var result = await _sender.Send(query, cancellationToken);
             return Ok(result.Value);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+        {
+            var query = new GetAllProductQuery();
+            var result = await _sender.Send(query, cancellationToken);
+            return Ok(result.Value);
+        }
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateAllProductRequest request, CancellationToken cancellationToken)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var result = await _sender.Send(_mapper.Map(request), cancellationToken);
             return Ok(result);
         }

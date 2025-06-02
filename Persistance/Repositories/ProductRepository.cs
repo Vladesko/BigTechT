@@ -27,5 +27,12 @@ namespace Persistance.Repositories
                     throw new ProductNotFoundException($"Product with Id: {id} was not found");              
             return product;       
         }
+        public async Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken)
+        {
+            var prodcuts = await _context.Products.
+                AsNoTracking().
+                ToArrayAsync(cancellationToken);
+            return prodcuts;
+        }
     }
 }
