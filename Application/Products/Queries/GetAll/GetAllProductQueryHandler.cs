@@ -11,6 +11,12 @@ namespace Application.Products.Queries.GetAll
         {
             _productRepository = productRepository;
         }
+        /// <summary>
+        /// The handle for complete query
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Collection of products as result of Success</returns>
         public async Task<Result<IEnumerable<Product>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
         {
             var productAsAsync = await _productRepository.GetAllAsync(cancellationToken);

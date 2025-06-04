@@ -10,14 +10,19 @@ namespace Application.Products.Commands.CreateProduct
         private const string PRICE_EMPTY_ERROR = "Price can not be empry";
         public CreateProductCommandValidator()
         {
-            //Name
+            NameValidate();
+            PriceValidate();
+        }
+        private void NameValidate()
+        {
             RuleFor(p => p.Name).NotEmpty().
                 MinimumLength(2).
                 WithMessage(MIN_LENGTH_ERROR).
                 MaximumLength(256).
                 WithMessage(MAX_LENGTH_ERROR);
-
-            //Price
+        }
+        private void PriceValidate()
+        {
             RuleFor(p => p.Price).
                 NotEmpty().
                 WithMessage(PRICE_EMPTY_ERROR);
