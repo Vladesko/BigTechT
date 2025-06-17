@@ -15,8 +15,7 @@ namespace Persistance.Repositories
 
         public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken)
         {
-            var entity = await _context.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken) ??
-                    throw new ProductNotFoundException($"Product with Id: {id} was not found"); 
+            var entity = await GetByIdAsync(id, cancellationToken);
             _context.Products.Remove(entity);
             return true;               
         }

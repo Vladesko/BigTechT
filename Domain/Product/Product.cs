@@ -10,7 +10,7 @@
             Name = name;
             Price = price;
         }
-        public static Product CreateOrder(string name, decimal price)
+        public static Product Create(string name, decimal price)
         {
             if(string.IsNullOrEmpty(name))
                 throw new ArgumentNullException(nameof(name));

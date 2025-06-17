@@ -12,10 +12,10 @@ namespace Application.Products.Commands.CreateProduct
             _productRepository = productRepository;
         }
 
-        public async Task<Result<int>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
             var productId = await _productRepository.
-                CreateAsync(Product.CreateOrder(request.Name, request.Price), cancellationToken);
+                CreateAsync(Product.Create(command.Name, command.Price), cancellationToken);
 
             return Result.Success(productId);
         }

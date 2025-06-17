@@ -12,14 +12,14 @@ namespace Application.Products.Commands.UpdateProduct
             _productRepository = productRepository;
         }
 
-        public async Task<Result> Handle(UpdateAllProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateAllProductCommand command, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
+            var product = await _productRepository.GetByIdAsync(command.Id, cancellationToken);
             if (product == null) 
                 return Result.Failure(Error.NullValue);
 
-            product.Name = request.Name;
-            product.Price = request.Price;
+            product.Name = command.Name;
+            product.Price = command.Price;
 
             return Result.Success();
         }

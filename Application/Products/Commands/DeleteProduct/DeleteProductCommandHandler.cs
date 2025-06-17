@@ -12,9 +12,9 @@ namespace Application.Products.Commands.DeleteProduct
             _productRepository = productRepository;
         }
 
-        public async Task<Result<bool>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+        public async Task<Result<bool>> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-            var isRemoved = await _productRepository.DeleteAsync(request.Id, cancellationToken);
+            var isRemoved = await _productRepository.DeleteAsync(command.Id, cancellationToken);
             if(!isRemoved)           
                 return Result.Failure<bool>(Error.RemoveFailed);
             
