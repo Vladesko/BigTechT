@@ -1,5 +1,6 @@
-using Serilog;
 using Logging;
+using Scalar.AspNetCore;
+using Serilog;
 using WebApi.Common;
 using WebApi.Extensions;
 using WebApi.Mapping;
@@ -19,12 +20,15 @@ builder.Services.AddScoped<IMapper, Mapper>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "/openapi/{documentName}.json";
+    });
+    app.MapScalarApiReference();
 }
+
 
 app.MapPrometheusScrapingEndpoint();
 

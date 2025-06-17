@@ -4,6 +4,8 @@ using Npgsql;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using TelemetryAndTracing.Activities;
+using TelemetryAndTracing.Metrics;
 
 namespace TelemetryAndTracing
 {
@@ -19,7 +21,7 @@ namespace TelemetryAndTracing
             otel.WithMetrics(metrics => metrics
                 // Metrics provider from OpenTelemetry
                 .AddAspNetCoreInstrumentation()
-                //.AddMeter(Metrics.GreeterMeter.Name)
+                .AddMeter(GetCountOfProductMetrics.ProductCounter.Name)
                 // Metrics provides by ASP.NET Core in .NET 8
                 .AddMeter("Microsoft.AspNetCore.Hosting")
                 .AddMeter("Microsoft.AspNetCore.Server.Kestrel")
@@ -32,7 +34,7 @@ namespace TelemetryAndTracing
             {
                 tracing.AddAspNetCoreInstrumentation();
                 tracing.AddHttpClientInstrumentation();
-               // tracing.AddSource(ActivitySources.GetProductByIdActivitySource.Name);
+                tracing.AddSource(ActivitieSources.GetProductCounter.Name);
                 tracing.AddNpgsql();
                 if (tracingOtlpEndpoint != null)
                 {

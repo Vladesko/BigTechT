@@ -4,7 +4,7 @@ using Domain.Product;
 
 namespace Application.Products.Commands.CreateProduct
 {
-    internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, int>
+    internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, int>
     {
         private readonly IProductRepository _productRepository;
         public CreateProductCommandHandler(IProductRepository productRepository)
