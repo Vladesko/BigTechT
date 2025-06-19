@@ -1,5 +1,5 @@
-﻿using Domain.Abstractions;
-using Domain.Product;
+﻿using Application.Interfaces;
+using Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

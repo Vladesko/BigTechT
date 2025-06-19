@@ -1,4 +1,5 @@
-﻿using Application.Products.Queries.GetProductById;
+﻿using Application.Interfaces;
+using Application.Products.Queries.GetProductById;
 using Domain.Abstractions;
 using Domain.Product;
 using Moq;

@@ -6,5 +6,6 @@
 
         public static readonly Error NullValue = new("Error.NullValue", "Null value was provided");
         public static readonly Error RemoveFailed = new("Error.Remove.Failed", "This entity was not removed");
+        public static readonly Error CreateFailed = new("Error.Create.Failed", "This entity was not created");
     }
 }

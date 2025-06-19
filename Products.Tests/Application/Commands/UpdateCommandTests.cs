@@ -1,4 +1,5 @@
-﻿using Application.Products.Commands.UpdateProduct;
+﻿using Application.Interfaces;
+using Application.Products.Commands.UpdateProduct;
 using Domain.Abstractions;
 using Domain.Product;
 using Moq;
@@ -28,14 +29,14 @@ namespace Products.Tests.Application.Commands
             var product = Product.Create(DEFAULT_NAME, DEFAULT_PRICE);
 
              _mockProductRepository.
-                Setup(r => r.GetByIdAsync(ID, default)).
+                Setup(r => r.GetByIdAsync(ID, It.IsAny<CancellationToken>())).
                 ReturnsAsync(product);
 
             var command = new UpdateAllProductCommand(ID, CHANGED_NAME, CHANGED_PRICE);
             var handler = new UpdateAllProductCommandHandler(_mockProductRepository.Object);
 
             //Act
-            Result result = await handler.Handle(command, default);
+            Result result = await handler.Handle(command, It.IsAny<CancellationToken>());
 
             //Assert
             result.IsSuccess.ShouldBeTrue();

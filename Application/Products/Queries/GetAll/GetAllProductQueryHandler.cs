@@ -1,4 +1,5 @@
 ﻿using Application.Abstrations.Messaging;
+using Application.Interfaces;
 using Domain.Abstractions;
 using Domain.Product;
 
@@ -19,8 +20,10 @@ namespace Application.Products.Queries.GetAll
         /// <returns>Collection of products as result of Success</returns>
         public async Task<Result<IEnumerable<Product>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
         {
-            var productAsAsync = await _productRepository.GetAllAsync(cancellationToken);
-            return Result.Success(productAsAsync);  
+            var result = await _productRepository.GetAllAsync(cancellationToken);
+            if (result.IsFailure)
+                return result;
+            return Result.Success(result.Value);  
         }
     }
 }

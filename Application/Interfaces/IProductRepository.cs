@@ -1,10 +1,12 @@
-﻿namespace Domain.Product
+﻿using Domain.Abstractions;
+using Domain.Product;
+
+namespace Application.Interfaces;
+
+public interface IProductRepository
 {
-    public interface IProductRepository
-    {
-        Task<Product> GetByIdAsync(int id, CancellationToken cancellationToken);
-        Task<int> CreateAsync(Product product, CancellationToken cancellationToken);
-        Task<bool> DeleteAsync(int id, CancellationToken cancellationToken);
-        Task<IEnumerable<Product>> GetAllAsync(CancellationToken cancellationToken);
-    }
+    Task<Result<Product>> GetByIdAsync(int id, CancellationToken cancellationToken);
+    Task<Result<int>> CreateAsync(Product product, CancellationToken cancellationToken);
+    Task<Result<bool>> DeleteAsync(int id, CancellationToken cancellationToken);
+    Task<Result<IEnumerable<Product>>> GetAllAsync(CancellationToken cancellationToken);
 }

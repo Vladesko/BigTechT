@@ -1,6 +1,7 @@
 ﻿using Application.Abstrations.Messaging;
+using Application.Interfaces;
 using Domain.Abstractions;
-using Domain.Product;
+
 
 namespace Application.Products.Commands.UpdateProduct
 {
@@ -14,12 +15,12 @@ namespace Application.Products.Commands.UpdateProduct
 
         public async Task<Result> Handle(UpdateAllProductCommand command, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetByIdAsync(command.Id, cancellationToken);
-            if (product == null) 
+            var result = await _productRepository.GetByIdAsync(command.Id, cancellationToken);
+            if (result.IsFailure) 
                 return Result.Failure(Error.NullValue);
 
-            product.Name = command.Name;
-            product.Price = command.Price;
+            result.Value.Name = command.Name;
+            result.Value.Price = command.Price;
 
             return Result.Success();
         }

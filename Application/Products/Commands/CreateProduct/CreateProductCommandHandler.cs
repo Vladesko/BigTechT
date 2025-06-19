@@ -1,4 +1,5 @@
 ﻿using Application.Abstrations.Messaging;
+using Application.Interfaces;
 using Domain.Abstractions;
 using Domain.Product;
 
@@ -14,10 +15,13 @@ namespace Application.Products.Commands.CreateProduct
 
         public async Task<Result<int>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var productId = await _productRepository.
+            var result = await _productRepository.
                 CreateAsync(Product.Create(command.Name, command.Price), cancellationToken);
 
-            return Result.Success(productId);
+            if (result.IsFailure)
+                return result;
+
+            return Result.Success(result.Value);
         }
     }
 }

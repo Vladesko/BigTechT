@@ -1,4 +1,5 @@
-﻿using Application.Products.Commands.DeleteProduct;
+﻿using Application.Interfaces;
+using Application.Products.Commands.DeleteProduct;
 using Domain.Abstractions;
 using Domain.Product;
 using Moq;

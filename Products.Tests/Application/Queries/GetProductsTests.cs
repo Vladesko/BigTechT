@@ -1,4 +1,5 @@
-﻿using Application.Products.Queries.GetAll;
+﻿using Application.Interfaces;
+using Application.Products.Queries.GetAll;
 using Domain.Abstractions;
 using Domain.Product;
 using Moq;
@@ -31,7 +32,7 @@ namespace Products.Tests.Application.Queries
 
             _mockProductRepository.
                 Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>())).
-                ReturnsAsync(products);
+                ReturnsAsync(Result.Success(products));
 
             var qeury = new GetAllProductQuery();
             var handler = new GetAllProductQueryHandler(_mockProductRepository.Object);

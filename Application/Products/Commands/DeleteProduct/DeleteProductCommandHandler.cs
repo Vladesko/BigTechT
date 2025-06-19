@@ -1,6 +1,6 @@
 ﻿using Application.Abstrations.Messaging;
+using Application.Interfaces;
 using Domain.Abstractions;
-using Domain.Product;
 
 namespace Application.Products.Commands.DeleteProduct
 {
@@ -14,11 +14,11 @@ namespace Application.Products.Commands.DeleteProduct
 
         public async Task<Result<bool>> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-            var isRemoved = await _productRepository.DeleteAsync(command.Id, cancellationToken);
-            if(!isRemoved)           
-                return Result.Failure<bool>(Error.RemoveFailed);
+            var result = await _productRepository.DeleteAsync(command.Id, cancellationToken);
+            if(result.IsFailure)           
+                return result;
             
-            return Result.Success(isRemoved);
+            return Result.Success(result.Value);
         }
     }
 }
