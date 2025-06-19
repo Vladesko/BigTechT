@@ -22,7 +22,7 @@ namespace Products.Tests.Application.Commands
         {
             //Arrange
             _mockProductRepository.
-                Setup(r => r.CreateAsync(
+                Setup(r => r.AddAsync(
                     It.IsAny<Product>(),
                     It.IsAny<CancellationToken>())).
                 ReturnsAsync(Result.Success(1));
