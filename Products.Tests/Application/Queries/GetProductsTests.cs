@@ -26,8 +26,8 @@ namespace Products.Tests.Application.Queries
             //Arrange
             IEnumerable<Product> products = new Product[] //Necessary to indicate that this is an array
                 {
-                    Product.Create(DEFAULT_NAME_1, DEFAULT_PRICE_1),
-                    Product.Create(DEFAULT_NAME_2, DEFAULT_PRICE_2)
+                    Product.Create(DEFAULT_NAME_1, DEFAULT_PRICE_1).Value,
+                    Product.Create(DEFAULT_NAME_2, DEFAULT_PRICE_2).Value
                 };
 
             _mockProductRepository.

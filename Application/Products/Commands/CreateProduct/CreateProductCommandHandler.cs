@@ -15,13 +15,18 @@ namespace Application.Products.Commands.CreateProduct
 
         public async Task<Result<int>> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var result = await _productRepository.
-                AddAsync(Product.Create(command.Name, command.Price), cancellationToken);
+            var productResult = Product.Create(command.Name, command.Price);
 
-            if (result.IsFailure)
-                return result;
+            if (productResult.IsFailure)
+                return Result.Failure<int>(productResult.Error);
 
-            return Result.Success(result.Value);
+            var createResult = await _productRepository.
+                AddAsync(productResult.Value, cancellationToken);
+
+            if (createResult.IsFailure)
+                return Result.Failure<int>(createResult.Error);
+
+            return Result.Success(createResult.Value);
         }
     }
 }

@@ -35,9 +35,9 @@ namespace Products.Tests.Persistance
         }
         private static IEnumerable<Product> Products =>
             [
-                Product.Create(PRODUCT_NAME_1, PRODUCT_PRICE_1),
-                Product.Create(PRODUCT_NAME_2, PRODUCT_PRICE_2),
-                Product.Create(PRODUCT_NAME_3, PRODUCT_PRICE_3)
+                Product.Create(PRODUCT_NAME_1, PRODUCT_PRICE_1).Value,
+                Product.Create(PRODUCT_NAME_2, PRODUCT_PRICE_2).Value,
+                Product.Create(PRODUCT_NAME_3, PRODUCT_PRICE_3).Value
             ];
     }
 }

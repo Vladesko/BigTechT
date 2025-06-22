@@ -26,7 +26,7 @@ namespace Products.Tests.Application.Commands
         public async Task Handle_Should_ReturnSuccessResult_WhenIdIsExistsAndDataIsValid()
         {
             //Arrange
-            var product = Product.Create(DEFAULT_NAME, DEFAULT_PRICE);
+            var product = Product.Create(DEFAULT_NAME, DEFAULT_PRICE).Value;
 
              _mockProductRepository.
                 Setup(r => r.GetByIdAsync(ID, It.IsAny<CancellationToken>())).

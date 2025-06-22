@@ -5,8 +5,6 @@ using HttpModels.Products.Command.Create;
 using HttpModels.Products.Command.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TelemetryAndTracing.Metrics;
-using TelemetryAndTracing.Activities;
 using WebApi.Mapping;
 
 namespace WebApi.Controllers
@@ -35,6 +33,10 @@ namespace WebApi.Controllers
                 return BadRequest(ModelState);
             
             var result = await _sender.Send(_mapper.Map(request), cancellationToken);
+
+            if (result.IsFailure)
+                return BadRequest(result.Error);
+
             return Ok(result.Value); //Value is id of created product
         }
         /// <summary>
@@ -44,49 +46,15 @@ namespace WebApi.Controllers
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IEnumerable<int>> GetById(int id, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken)
         {
-            using (var activity = ActivitieSources.GetProductCounter.StartActivity("BigTechT.ProductCounter"))
-            {
-                activity.SetTag("product","Hello Kazan");
-                GetCountOfProductMetrics.CountGetHttpProducts.Add(1);
-            }
-            var query = new GetProductByIdQuery(id);
-            var result = await _sender.Send(query, cancellationToken);
-            var tasks = Enumerable.Range(1, 30).Select(async i =>
-            {
-                Console.WriteLine($"{i} task started");
-                Console.WriteLine($"{i} task finished");
-                return i;
-            });
-            return await Task.WhenAll(tasks);
-            //return Ok(result.Value); //Value is a product with all parametrs
-        }
-        [HttpGet("test/{id}")]
-        public async Task<IEnumerable<int>> GetByIdTest(int id, CancellationToken cancellationToken)
-        {
-            using (var activity = ActivitieSources.GetProductCounter.StartActivity("BigTechT.ProductCounter"))
-            {
-                activity.SetTag("product", "Hello Kazan");
-                GetCountOfProductMetrics.CountGetHttpProducts.Add(1);
-            }
             var query = new GetProductByIdQuery(id);
             var result = await _sender.Send(query, cancellationToken);
 
+            if(result.IsFailure)
+                return BadRequest(result.Error);
 
-            var maxDegreeOfParallelism = 3;
-            var semaphore = new SemaphoreSlim(maxDegreeOfParallelism);
-            var tasks = Enumerable.Range(1, 30).Select(async i =>
-            {
-                Console.WriteLine($"{i} task started");
-                await semaphore.WaitAsync();
-                Console.WriteLine($"{i} task finished");
-                semaphore.Release();
-                return i;
-            });
-            
-            return await Task.WhenAll(tasks);
-            // return Ok(result.Value); //Value is a product with all parametrs
+            return Ok(result.Value); //Value is a product with all parametrs
         }
         /// <summary>
         /// Get all products 
@@ -98,6 +66,10 @@ namespace WebApi.Controllers
         {
             var query = new GetAllProductQuery();
             var result = await _sender.Send(query, cancellationToken);
+
+            if(result.IsFailure)
+                return BadRequest(result.Error);
+
             return Ok(result.Value); //Collection of products
         }
         /// <summary>
@@ -113,6 +85,10 @@ namespace WebApi.Controllers
                 return BadRequest(ModelState);
 
             var result = await _sender.Send(_mapper.Map(request), cancellationToken);
+
+            if(result.IsFailure)
+                return BadRequest(result.Error);
+
             return Ok(result);
         }
         /// <summary>
@@ -126,6 +102,10 @@ namespace WebApi.Controllers
         {
             var command = new DeleteProductCommand(id);
             var result = await _sender.Send(command, cancellationToken);
+           
+            if(result.IsFailure) 
+                return BadRequest(result.Error);
+
             return Ok(result);
         }
     }

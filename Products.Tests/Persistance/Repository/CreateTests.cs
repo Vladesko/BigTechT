@@ -13,7 +13,7 @@ namespace Products.Tests.Persistance.Repository
         public async Task CreateProduct_Should_ResultSuccess_WhenDataIsValid()
         {
             //Arrange
-            var product = Product.Create(DEFAULT_NAME, DEFAULT_PRICE);
+            var product = Product.Create(DEFAULT_NAME, DEFAULT_PRICE).Value;
 
             //Act
             var result = await _repository.AddAsync(product, It.IsAny<CancellationToken>());
