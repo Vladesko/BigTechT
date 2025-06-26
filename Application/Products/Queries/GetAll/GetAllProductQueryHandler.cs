@@ -21,8 +21,10 @@ namespace Application.Products.Queries.GetAll
         public async Task<Result<IEnumerable<Product>>> Handle(GetAllProductQuery request, CancellationToken cancellationToken)
         {
             var result = await _productRepository.GetAllAsync(cancellationToken);
+
             if (result.IsFailure)
-                return result;
+                return Result.Failure<IEnumerable<Product>>(result.Error);
+
             return Result.Success(result.Value);  
         }
     }

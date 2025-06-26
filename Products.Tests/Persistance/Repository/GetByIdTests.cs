@@ -19,5 +19,18 @@ namespace Products.Tests.Persistance.Repository
             result.IsSuccess.ShouldBeTrue();
             result.Value.Id.ShouldBe(product.Id);
         }
+        [Fact]
+        public async Task GetProductById_Should_ReturnFailure_WhenIdIsNotExistInDb()
+        {
+            //Arrange
+            int wrondId = 4;
+
+            //Act
+            var result = await _repository.GetByIdAsync(wrondId, It.IsAny<CancellationToken>());
+
+            //Assert
+            result.IsFailure.ShouldBeTrue();
+            
+        }
     }
 }

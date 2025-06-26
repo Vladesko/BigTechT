@@ -16,7 +16,7 @@ namespace Application.Products.Commands.DeleteProduct
         {
             var result = await _productRepository.DeleteAsync(command.Id, cancellationToken);
             if(result.IsFailure)           
-                return result;
+                return Result.Failure<bool>(result.Error);
             
             return Result.Success(result.Value);
         }

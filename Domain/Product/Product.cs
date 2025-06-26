@@ -6,12 +6,12 @@ namespace Domain.Product
     {
         public int Id { get; }
         public string Name { get; set; } = string.Empty;
-        public string UniqueArticle { get; set; } = string.Empty;
+        //public string UniqueArticle { get; set; } = string.Empty;
         public decimal Price { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public string ProductStatus { get; set; } = string.Empty; //TODO: Make as enum and ValueObject
-        public DateTime? UpdateAt { get; set; }
-        public DateTime CreatedAt { get; } = DateTime.Now;
+       // public string Description { get; set; } = string.Empty;
+        // public string ProductStatus { get; set; } = string.Empty; //TODO: Make as enum and ValueObject
+       // public DateTime? UpdateAt { get; set; }
+       // public DateTime CreatedAt { get; } = DateTime.Now;
         private Product(string name, decimal price) 
         {
             Name = name;

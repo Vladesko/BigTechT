@@ -29,7 +29,6 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-
 app.MapPrometheusScrapingEndpoint();
 
 app.UseCustomExceptions();

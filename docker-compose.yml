@@ -117,13 +117,55 @@ services:
       - "9187:9187"
     depends_on:
       - postgresdb
+  pgadmin:
+    container_name: pgadmin
+    networks:
+      - app
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.ru 
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    restart: always
+    ports:
+      - "5050:80"
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    restart: always
+    networks:
+      - app
+    ports:
+      - "8081:8000"
+      - "9091:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
 
 volumes:
   elasticsearch-data:  
   postgres_data:
   prometheus-data:
   grafana_storage:
+  portainer_data:
 
 networks:
   app:
     driver: "bridge"
+
+# services:
+#   postgresdb:
+#     image: postgres
+#     container_name: postgresdb
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=postgres
+#       - POSTGRES_DB=Product
+#     restart: always
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+
+
+# volumes:
+#   postgres_data:
