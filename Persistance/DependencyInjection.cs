@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Exceptions;
+using Application.Interfaces;
 using Domain.Abstractions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,7 +13,7 @@ namespace Persistance
         public static IServiceCollection AddPersistance(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("PostgreSQL") ??
-                                  throw new ArgumentNullException(nameof(configuration));
+                                  throw new DataBaseConnectionException("Database");
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString));
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());

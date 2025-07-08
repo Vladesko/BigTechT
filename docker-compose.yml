@@ -1,5 +1,6 @@
 services:
 
+  #-----------------------------api---------------------------------
   api:
     container_name: api
     image: api
@@ -16,12 +17,13 @@ services:
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
     depends_on:
       - postgresdb
+      - redis
       - elasticsearch
       - jaeger
     ports:
       - "5000:5000"
 
-  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html elasticSearch
   elasticsearch:
     image: docker.io/library/elasticsearch:8.10.2
     container_name: elasticsearch
@@ -38,7 +40,7 @@ services:
       - elasticsearch-data:/usr/share/elasticsearch/data
   
 
-  # https://www.elastic.co/guide/en/kibana/current/docker.html
+  # https://www.elastic.co/guide/en/kibana/current/docker.html  kibana
   kibana:
     image: docker.io/library/kibana:8.10.2
     container_name: kibana
@@ -52,6 +54,7 @@ services:
     ports:
       - "5601:5601"
 
+  #---------------------------------jaeger----------------------------------------
   jaeger:
     image: jaegertracing/all-in-one:latest
     container_name: jaeger
@@ -69,7 +72,7 @@ services:
       - "9411:9411"
       - "4317:4317"
       - "4318:4318"
-  
+  #--------------------------postgres---------------------
   postgresdb:
     image: postgres
     container_name: postgresdb
@@ -84,28 +87,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-
-  prometheus:
-    container_name: prometheus
-    image: prom/prometheus
-    networks:
-     - app
-    ports:
-      - "9090:9090"
-    volumes:
-      - prometheus-data:/prometheus
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    
-  grafana:
-    container_name: grafana
-    ports:
-      - "3000:3000"
-    image: grafana/grafana
-    networks:
-      - app
-    volumes:
-      - grafana_storage:/var/lib/grafana
-
+  
   postgres_exporter:
     networks:
       - app
@@ -128,6 +110,39 @@ services:
     restart: always
     ports:
       - "5050:80"
+  
+  #--------------------------------------redis-----------------------
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+  
+  #--------------------------------------prometheus---------------------------------
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    networks:
+     - app
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    
+  #--------------------------------grafana------------------------------------
+  grafana:
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    image: grafana/grafana
+    networks:
+      - app
+    volumes:
+      - grafana_storage:/var/lib/grafana
+
+  #-----------------------portainer--------------------
   portainer:
     image: portainer/portainer-ce
     container_name: portainer

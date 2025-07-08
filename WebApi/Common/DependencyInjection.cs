@@ -1,8 +1,7 @@
 ﻿using Application;
 using Persistance;
-using Serilog;
 using TelemetryAndTracing;
-using Logging;
+using Caching;
 
 namespace WebApi.Common
 {
@@ -11,7 +10,9 @@ namespace WebApi.Common
         public static IServiceCollection AddLayers(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddApplication();
+
             services.AddPersistance(configuration);
+            services.AddCaching(configuration);
 
             services.AddTelemetryAndTracing(configuration);
             return services;

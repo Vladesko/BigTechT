@@ -11,6 +11,7 @@ COPY ["/Persistance/Persistance.csproj", "/src/Persistance/"]
 COPY ["/HttpModels/HttpModels.csproj", "/src/HttpModels/"]
 COPY ["/Logging/Logging.csproj", "/src/Logging/"]
 COPY ["/TelemetryAndTracing/TelemetryAndTracing.csproj", "/src/TelemetryAndTracing/"]
+COPY ["/Caching/Caching.csproj", "/src/Caching/"]
 
 COPY . .
 

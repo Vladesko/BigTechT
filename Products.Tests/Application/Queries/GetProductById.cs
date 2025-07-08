@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Interfaces.CachingInterfaces;
 using Application.Products.Queries.GetProductById;
 using Domain.Abstractions;
 using Domain.Product;
@@ -17,22 +18,22 @@ namespace Products.Tests.Application.Queries
         private const decimal DEFAULT_PRICE_1 = 1;
         private const decimal DEFAULT_PRICE_2 = 2;
 
-        private readonly Mock<IProductRepository> _mockProductRepository;
+        private readonly Mock<ICacheService> _mockCacheService;
         public GetProductById()
         {
-            _mockProductRepository = new Mock<IProductRepository>();
+            _mockCacheService = new Mock<ICacheService>();
         }
         [Fact]
         public async Task Handle_Should_ResultSuccess_IdIsExist()
         {
             //Ararnge
              var product = Product.Create(DEFAULT_NAME_1, DEFAULT_PRICE_2).Value;
-            _mockProductRepository.
-                Setup(r => r.GetByIdAsync(DEFAULT_ID_1, It.IsAny<CancellationToken>())).
+            _mockCacheService.
+                Setup(s => s.GetProductById(DEFAULT_ID_1, It.IsAny<CancellationToken>())).
                 ReturnsAsync(product);
 
             var query = new GetProductByIdQuery(DEFAULT_ID_1);
-            var handler = new GetProductByIdQueryHandler(_mockProductRepository.Object);
+            var handler = new GetProductByIdQueryHandler(_mockCacheService.Object);
             //Act
 
             Result<Product> result = await handler.Handle(query, It.IsAny<CancellationToken>());

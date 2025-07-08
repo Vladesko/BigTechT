@@ -1,6 +1,6 @@
 ﻿namespace Application.Exceptions
 {
-    public class ProductNotFoundException : Exception
+    public sealed class ProductNotFoundException : Exception
     {
         public ProductNotFoundException(string message, Exception innerException) : base(message, innerException)
         {

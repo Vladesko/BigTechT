@@ -3,5 +3,5 @@ using Domain.Product;
 
 namespace Application.Products.Queries.GetAll
 {
-    public record GetAllProductQuery() : IQuery<IEnumerable<Product>>;
+    public sealed record GetAllProductQuery() : IQuery<IEnumerable<Product>>;
 }

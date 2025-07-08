@@ -59,11 +59,11 @@ namespace WebApi.Middleware
                         "Validation error",
                         "One or more validation errors has occurred",
                         validationException.ValidationErrors),
-                    ProductNotFoundException productNotFound => new ExceptionDetails(
-                        StatusCodes.Status404NotFound,
-                        "Product.Not.Found",
-                        "Product was not found",
-                        productNotFound.Message,
+                    ConnectionException connectionException => new ExceptionDetails(
+                        StatusCodes.Status503ServiceUnavailable,
+                        "Connection.Problem",
+                        connectionException.Name,
+                        connectionException.Message,
                         null
                         ),
                     _ => new ExceptionDetails(

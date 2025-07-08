@@ -1,6 +1,4 @@
-﻿
-
-namespace Caching
+﻿namespace Caching
 {
     internal class CacheOptions
     {
