@@ -15,6 +15,7 @@ services:
       - "ConnectionStrings__PostgreSQL=Server=postgresdb;Port=5432;Database=Product;User Id=postgres;Password=postgres;"
       - "OTLP_ENDPOINT_URL=http://jaeger:4317/"
       - "ElasticConfiguration__Uri=http://elasticsearch:9200"
+      - "ConnectionStrings__Redis=redis:6379"
     depends_on:
       - postgresdb
       - redis
@@ -114,6 +115,8 @@ services:
   #--------------------------------------redis-----------------------
   redis:
     image: redis:7
+    networks: 
+      - app
     container_name: redis
     restart: always
     ports:

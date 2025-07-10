@@ -12,6 +12,6 @@ namespace Application.Products.Queries.GetProductById
     {
         public string Key => $"product-id-{Id}";
 
-        public TimeSpan? Expiration => null;
+        public TimeSpan? Expiration => TimeSpan.FromMinutes(5);
     }
 }

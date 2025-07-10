@@ -17,7 +17,7 @@ namespace Caching
             {
                 options.Configuration = connection;
             });
-            services.AddScoped<ICacheService, CacheService>();
+            services.AddSingleton<ICacheService, CacheService>();
             return services;
         }
     }

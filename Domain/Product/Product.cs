@@ -17,6 +17,10 @@ namespace Domain.Product
             Name = name;
             Price = price;
         }
+        public Product()
+        {
+
+        }
         /// <summary>
         /// Create a new product
         /// </summary>

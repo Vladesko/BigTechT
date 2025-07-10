@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces;
 using Application.Interfaces.CachingInterfaces;
-using Domain.Abstractions;
-using Domain.Product;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
@@ -9,35 +7,37 @@ namespace Caching
 {
     internal sealed class CacheService : ICacheService
     {
-
         private readonly IDistributedCache _distributedCache;
-        private readonly IProductRepository _productRepository;
-        public CacheService(IDistributedCache distributedCache, IProductRepository productRepository)
+        public CacheService(IDistributedCache distributedCache)
         {
             _distributedCache = distributedCache;
-            _productRepository = productRepository;
         }
 
-        public async Task<Result<Product>> GetProductById(int id, CancellationToken cancellationToken = default)
+        public async Task<T?> GetAsync<T>(string cacheKey, 
+            CancellationToken cancellationToken = default) 
         {
-            string key = $"product-id-{id}";
-            
-            string? cachedProduct = await _distributedCache.GetStringAsync(key, cancellationToken);
-            if(string.IsNullOrEmpty(cachedProduct))
-            {
-                var productResult = await _productRepository.GetByIdAsync(id, cancellationToken);
-                if(productResult.IsFailure)
-                    return Result.Failure<Product>(productResult.Error);
+            string? cachedValue = await _distributedCache.
+                GetStringAsync(
+                cacheKey, 
+                cancellationToken);
 
-                await _distributedCache.SetStringAsync(
-                    key,
-                    JsonConvert.SerializeObject(productResult.Value),
-                    cancellationToken);
+            if (cachedValue is null)
+                return default;
 
-                return productResult.Value;
-            }
-            var product = JsonConvert.DeserializeObject<Product>(cachedProduct);
-            return product;
+            T? value = JsonConvert.DeserializeObject<T>(cachedValue);
+            return value;
+        }
+        public async Task RemoveAsync(string cacheKey, CancellationToken cancellationToken = default)
+        {
+            await _distributedCache.RemoveAsync(cacheKey, cancellationToken);
+        }
+        public async Task SetAsync<T>(string cacheKey, T value, TimeSpan? expiration, CancellationToken cancellationToken = default) where T : class
+        {
+            string cacheValue = JsonConvert.SerializeObject(value);
+
+            await _distributedCache.SetStringAsync(cacheKey, cacheValue, 
+                CacheOptions.Create(expiration),
+                 cancellationToken);
         }
     }
 }

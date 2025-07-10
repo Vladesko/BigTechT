@@ -1,10 +1,11 @@
-﻿using Domain.Abstractions;
-using Domain.Product;
-
-namespace Application.Interfaces.CachingInterfaces
+﻿namespace Application.Interfaces.CachingInterfaces
 {
     public interface ICacheService
     {
-        Task<Result<Product>> GetProductById(int id, CancellationToken cancellationToken = default);
+        Task<T?> GetAsync<T>(string cacheKey, CancellationToken cancellationToken = default);
+        Task SetAsync<T>(string cacheKey, T value, TimeSpan? expiration, CancellationToken cancellationToken = default)
+            where T : class;
+
+        Task RemoveAsync(string cacheKey, CancellationToken cancellationToken = default);
     }
 }
